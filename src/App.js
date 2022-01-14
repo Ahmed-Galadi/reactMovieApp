@@ -7,7 +7,8 @@ import { GlobalStyle } from './GlobalStyle';
 import Header from './components/Header';
 import Home from './components/Home'
 import Movie from './components/Movie';
-import NotFound from './components/NotFound'
+import NotFound from './components/NotFound';
+import Footer from './components/Footer';
 
 function App() {
   return(
@@ -18,6 +19,7 @@ function App() {
         <Route path='/:movieID' element={<Movie />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
+      <Footer />
       <GlobalStyle />
     </Router>
   );

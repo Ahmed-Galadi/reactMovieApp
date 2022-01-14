@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 
 //API
 import API from '../API';
+//Helpers
+import { isPersistedState } from '../helpers';
 
 const initialState = {
     page: 0,
@@ -38,6 +40,15 @@ export const useHomeFetch = () => {
 
     // Initial Render & Search
     useEffect(() => {
+        if(!searchTerm) {
+            const sessionState = isPersistedState('homeState');
+
+            if(sessionState) {
+                setState(sessionState);
+                return;
+            }
+        }
+
         setState(initialState);
         fetchData(1, searchTerm);
     }, [searchTerm]);
@@ -50,6 +61,11 @@ export const useHomeFetch = () => {
         setLoadMore(false);
 
     }, [loadMore, searchTerm, state.page])
+
+    // Write to Sesion Storage
+    useEffect(() => {
+        if(!searchTerm) sessionStorage.setItem('homeState', JSON.stringify(state));
+    }, [searchTerm, state]);
 
     return { state, loading, error, setSearchTerm, searchTerm, loadMore, setLoadMore }
 }

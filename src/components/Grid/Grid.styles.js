@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
         }
     }
 
-    p {
+    h3 {
         color: var(--medGrey);
         font-size: var(--fontMed);
         text-align: center;

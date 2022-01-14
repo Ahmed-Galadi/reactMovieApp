@@ -17,8 +17,6 @@ const Home = () => {
     
     const { state, loading, error, setSearchTerm, searchTerm, setLoadMore } = useHomeFetch();
 
-    console.log(state, loading, error);
-
     if(error) return <div>Somthing Went Wrong...</div>
 
     return (<>
@@ -41,7 +39,7 @@ const Home = () => {
                     }
                     movieID={movie.id}
                 />
-                <p>{movie.title}</p>
+                <h3>{movie.title}</h3>
             </div>))}            
         </Grid>
         {loading && (<Spinner />)}
