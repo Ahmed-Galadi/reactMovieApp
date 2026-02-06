@@ -1,0 +1,29 @@
+// Prisma Schema for Tawqil AI
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String
+  password     String?
+  organization String?
+  role         String   @default("USER")
+  refreshToken String?
+// for Reseting the Password
+  resetToken        String?  
+  resetTokenExpiry  DateTime?
+// google auth
+  googleId          String?   @unique
+  avatar            String?  // Profile picture URL
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
