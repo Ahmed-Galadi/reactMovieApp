@@ -19,14 +19,16 @@ export const Content = styled.div`
     h2 {
         color: var(--white);
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
         font-size: var(--fontSuperBig);
     }
 
-    p {
+    .subtitle {
         color: var(--lightGrey);
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        font-size: var(--fontSmall);
+        line-height: 1.5;
     }
 `;
 
@@ -34,6 +36,17 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     gap: 20px;
+`;
+
+export const InputGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    label {
+        color: var(--lightGrey);
+        font-size: var(--fontSmall);
+    }
 `;
 
 export const Input = styled.input`
@@ -48,7 +61,7 @@ export const Input = styled.input`
     outline: none;
 
     ::placeholder {
-        color: var(--lightGrey);
+        color: #666;
     }
 
     :focus {
@@ -79,13 +92,22 @@ export const SubmitButton = styled.button`
     }
 `;
 
-export const ErrorMsg = styled.p`
-    color: #ff6b6b !important;
+export const ErrorMsg = styled.div`
+    color: #ff6b6b;
     background: rgba(255, 107, 107, 0.1);
-    padding: 10px;
+    padding: 12px;
     border-radius: 10px;
     text-align: center;
-    margin: 0;
+    font-size: var(--fontSmall);
+`;
+
+export const SuccessMsg = styled.div`
+    color: #51cf66;
+    background: rgba(81, 207, 102, 0.1);
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: var(--fontSmall);
 `;
 
 export const LinkText = styled.p`
@@ -104,62 +126,39 @@ export const LinkText = styled.p`
     }
 `;
 
-export const Divider = styled.div`
+export const PasswordStrength = styled.div`
     display: flex;
-    align-items: center;
-    gap: 15px;
-    margin: 25px 0;
+    gap: 5px;
+    margin-top: 5px;
 
-    span {
-        color: var(--lightGrey);
-        font-size: var(--fontSmall);
-        white-space: nowrap;
-    }
-
-    ::before,
-    ::after {
-        content: '';
+    .bar {
         flex: 1;
-        height: 1px;
+        height: 4px;
         background: #444;
+        border-radius: 2px;
+        transition: background 0.3s;
+
+        &.weak {
+            background: #ff6b6b;
+        }
+
+        &.medium {
+            background: #ffd43b;
+        }
+
+        &.strong {
+            background: #51cf66;
+        }
     }
 `;
 
-export const GoogleButton = styled.button`
-    width: 100%;
-    height: 50px;
-    border-radius: 25px;
-    border: 1px solid #444;
-    background: var(--darkGrey);
-    color: var(--white);
-    font-size: var(--fontMed);
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-
-    :hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--lightGrey);
-    }
-
-    :disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    svg {
-        width: 20px;
-        height: 20px;
-    }
-`;
-
-export const HiddenGoogleButton = styled.div`
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-    opacity: 0;
-    pointer-events: none;
+export const StrengthLabel = styled.span`
+    font-size: 12px;
+    color: ${props => {
+        if (props.strength === 'weak') return '#ff6b6b';
+        if (props.strength === 'medium') return '#ffd43b';
+        if (props.strength === 'strong') return '#51cf66';
+        return 'var(--lightGrey)';
+    }};
+    margin-top: 5px;
 `;

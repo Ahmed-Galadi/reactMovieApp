@@ -150,7 +150,7 @@ export const GoogleButton = styled.button`
     height: 50px;
     border-radius: 25px;
     border: 1px solid #444;
-    background: transparent;
+    background: var(--darkGrey);
     color: var(--white);
     font-size: var(--fontMed);
     cursor: pointer;
@@ -158,14 +158,28 @@ export const GoogleButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
 
     :hover {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--lightGrey);
     }
 
-    img {
+    :disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    svg {
         width: 20px;
         height: 20px;
     }
+`;
+
+export const HiddenGoogleButton = styled.div`
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
 `;

@@ -19,14 +19,16 @@ export const Content = styled.div`
     h2 {
         color: var(--white);
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
         font-size: var(--fontSuperBig);
     }
 
-    p {
+    .subtitle {
         color: var(--lightGrey);
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        font-size: var(--fontSmall);
+        line-height: 1.5;
     }
 `;
 
@@ -48,7 +50,7 @@ export const Input = styled.input`
     outline: none;
 
     ::placeholder {
-        color: var(--lightGrey);
+        color: #666;
     }
 
     :focus {
@@ -79,13 +81,22 @@ export const SubmitButton = styled.button`
     }
 `;
 
-export const ErrorMsg = styled.p`
-    color: #ff6b6b !important;
+export const ErrorMsg = styled.div`
+    color: #ff6b6b;
     background: rgba(255, 107, 107, 0.1);
-    padding: 10px;
+    padding: 12px;
     border-radius: 10px;
     text-align: center;
-    margin: 0;
+    font-size: var(--fontSmall);
+`;
+
+export const SuccessMsg = styled.div`
+    color: #51cf66;
+    background: rgba(81, 207, 102, 0.1);
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: var(--fontSmall);
 `;
 
 export const LinkText = styled.p`
@@ -104,62 +115,22 @@ export const LinkText = styled.p`
     }
 `;
 
-export const Divider = styled.div`
+export const BackIcon = styled.div`
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin: 25px 0;
-
-    span {
-        color: var(--lightGrey);
-        font-size: var(--fontSmall);
-        white-space: nowrap;
-    }
-
-    ::before,
-    ::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: #444;
-    }
-`;
-
-export const GoogleButton = styled.button`
-    width: 100%;
-    height: 50px;
-    border-radius: 25px;
-    border: 1px solid #444;
-    background: var(--darkGrey);
-    color: var(--white);
-    font-size: var(--fontMed);
+    gap: 8px;
+    color: var(--lightGrey);
+    font-size: var(--fontSmall);
+    margin-bottom: 20px;
     cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
+    transition: color 0.3s;
 
     :hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--lightGrey);
-    }
-
-    :disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
+        color: var(--white);
     }
 
     svg {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
     }
-`;
-
-export const HiddenGoogleButton = styled.div`
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-    opacity: 0;
-    pointer-events: none;
 `;

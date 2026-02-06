@@ -7,6 +7,9 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 // Backend API URL
 const API_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
 
+// Google OAuth Client ID
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
 const SEARCH_BASE_URL = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=`;
 const POPULAR_BASE_URL = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US`;
 // For login and voting
@@ -26,6 +29,7 @@ export {
   API_URL,
   API_KEY,
   API_BACKEND_URL,
+  GOOGLE_CLIENT_ID,
   IMAGE_BASE_URL,
   BACKDROP_SIZE,
   POSTER_SIZE,

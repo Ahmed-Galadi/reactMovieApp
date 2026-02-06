@@ -14,6 +14,8 @@ import Footer from './components/Footer';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Landing from './components/Landing';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
           <Route path='/' element={<Landing />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
           
           {/* Protected Routes */}
           <Route path='/movies' element={
