@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+// Context
+import { Context } from '../../context';
 // Styles
 import {
     Wrapper,
@@ -12,7 +14,15 @@ import {
 } from './Landing.styles';
 
 const Landing = () => {
+    const [user] = useContext(Context);
     const navigate = useNavigate();
+
+    // Redirect if already logged in
+    useEffect(() => {
+        if (user && user.token) {
+            navigate('/movies', { replace: true });
+        }
+    }, [user, navigate]);
 
     return (
         <Wrapper>

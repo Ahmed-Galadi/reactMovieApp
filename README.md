@@ -2,25 +2,30 @@
 
 A full-stack movie database application built with React and Node.js, powered by The Movie Database (TMDB) API.
 
-![RMDB](https://image.tmdb.org/t/p/original/628Dep6AxEtDxjZoGP78TsOxYbK.jpg)
+![alt text](image.png)
 
 ## ✨ Features
 
 - **🔐 User Authentication**
   - Email/Password registration and login
-  - Google OAuth integration
-  - JWT-based session management
+  - Google OAuth integration (Sign in with Google button)
+  - JWT-based session management with access & refresh tokens
+  - Password reset via email (forgot password flow)
   - Protected routes for authenticated users
+  - Auto-redirect: logged-in users can't access login/signup pages
 
 - **🎥 Movie Discovery**
   - Browse popular movies
   - Search movies by title
+  - Infinite scroll pagination
   - View detailed movie information
   - See cast and crew details
+  - Movie ratings and runtime
 
 - **📱 Responsive Design**
   - Mobile-friendly interface
   - Modern UI with styled-components
+  - Custom styled Google Sign-In button
 
 ## 🏗️ Tech Stack
 
@@ -56,13 +61,13 @@ cd reactMovieApp
 ```
 
 ### 2. Configure environment
-Copy the example environment file and update with your values:
+Create a `.env` file in the project root with these variables:
 
 ```env
 # TMDB API
 REACT_APP_API_KEY=your_tmdb_api_key
 
-# Google OAuth (optional)
+# Google OAuth
 GOOGLE_CLIENT_ID=your_google_client_id
 REACT_APP_GOOGLE_CLIENT_ID=your_google_client_id
 
@@ -74,7 +79,15 @@ POSTGRES_DB=rmdb_database
 # JWT Secrets (change these!)
 JWT_SECRET=your-super-secret-jwt-key
 JWT_REFRESH_SECRET=your-super-secret-refresh-key
+
+# Email (for password reset)
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-app-password
 ```
+
+> **Note:** For Gmail, use an [App Password](https://support.google.com/accounts/answer/185833) instead of your regular password.
 
 ### 3. Start the application
 ```bash
@@ -113,27 +126,37 @@ reactMovieApp/
 ├── docker-compose.yml     # Container orchestration
 ├── Makefile               # Development commands
 ├── .env                   # Environment variables
+├── README.md              # This file
 ├── frontend/
 │   ├── Dockerfile         # Frontend container
 │   ├── nginx.conf         # Nginx configuration
 │   ├── public/            # Static assets
 │   └── src/
-│       ├── components/    # React components
-│       ├── hooks/         # Custom hooks
-│       ├── images/        # Image assets
+│       ├── components/
+│       │   ├── Landing/       # Public landing page
+│       │   ├── Login/         # Login page with Google OAuth
+│       │   ├── Signup/        # Registration page
+│       │   ├── ForgotPassword/# Password reset request
+│       │   ├── ResetPassword/ # Password reset form
+│       │   ├── ProtectedRoute/# Auth guard component
+│       │   ├── Header/        # Navigation header
+│       │   ├── Home.js        # Movie grid
+│       │   ├── Movie.js       # Movie details
+│       │   └── ...            # Other UI components
+│       ├── hooks/         # Custom hooks (useHomeFetch, useMovieFetch)
+│       ├── context.js     # User auth context
 │       ├── API.js         # TMDB API calls
-│       ├── config.js      # App configuration
-│       └── context.js     # React context
+│       └── config.js      # App configuration
 └── backend/
     ├── Dockerfile         # Backend container
-    ├── prisma/            # Database schema
+    ├── prisma/
+    │   └── schema.prisma  # Database schema
     └── src/
         ├── controllers/   # Route handlers
         ├── middleware/    # Auth middleware
-        ├── models/        # Data models
         ├── repositories/  # Database queries
         ├── routes/        # API routes
-        └── services/      # Business logic
+        └── services/      # Business logic (auth, email, google)
 ```
 
 ## 🔒 API Endpoints
@@ -159,11 +182,40 @@ reactMovieApp/
 
 | Route | Access | Description |
 |-------|--------|-------------|
-| `/` | Public | Landing page |
-| `/login` | Public | Login page |
-| `/signup` | Public | Registration page |
-| `/movies` | Protected | Movie list |
+| `/` | Public* | Landing page |
+| `/login` | Public* | Login page |
+| `/signup` | Public* | Registration page |
+| `/forgot-password` | Public | Request password reset |
+| `/reset-password` | Public | Reset password with token |
+| `/movies` | Protected | Movie list (home) |
 | `/movie/:id` | Protected | Movie details |
+
+> *Public pages automatically redirect to `/movies` if user is already logged in. Navigation uses `replace: true` to prevent back-button access to auth pages after login.
+
+## 🔐 Authentication Flow
+
+### Email/Password
+1. User registers at `/signup` with email, password, name
+2. User logs in at `/login`
+3. Backend returns JWT access token (15min) + refresh token (7 days)
+4. Tokens stored in localStorage
+5. Protected routes check for valid token
+
+### Google OAuth
+1. User clicks "Continue with Google" button
+2. Google Identity Services popup opens
+3. User selects Google account
+4. Google returns ID token
+5. Backend verifies token with Google
+6. Backend creates/finds user, returns JWT tokens
+
+### Password Reset
+1. User clicks "Forgot password?" on login page
+2. Enters email at `/forgot-password`
+3. Backend sends reset link via email
+4. User clicks link, goes to `/reset-password?token=xxx`
+5. User enters new password
+6. Backend verifies token and updates password
 
 
 ## 🙏 Credits

@@ -32,7 +32,7 @@ const Login = () => {
     // Redirect if already logged in
     useEffect(() => {
         if (user && user.token) {
-            navigate('/movies');
+            navigate('/movies', { replace: true });
         }
     }, [user, navigate]);
 
@@ -68,7 +68,7 @@ const Login = () => {
                 localStorage.setItem('user', JSON.stringify(userData));
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('refreshToken', data.refreshToken);
-                navigate('/movies');
+                navigate('/movies', { replace: true });
             } else {
                 setError(data.message || 'Google sign-in failed');
             }
@@ -160,7 +160,7 @@ const Login = () => {
                 localStorage.setItem('user', JSON.stringify(userData));
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('refreshToken', data.refreshToken);
-                navigate('/movies');
+                navigate('/movies', { replace: true });
             } else {
                 setError(data.message || 'Invalid email or password');
             }
